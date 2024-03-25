@@ -1,20 +1,16 @@
 package main
 
 import (
-	"io"
 	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/ksdme/paperboard/pages"
 )
-
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	io.WriteString(w, "hello world")
-}
 
 func main() {
 	router := httprouter.New()
-	router.GET("/", Index)
+	router.GET("/", pages.Dashboard)
 
 	bind := ":8080"
 	log.Println("Starting paperboard on", bind)
