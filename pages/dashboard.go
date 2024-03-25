@@ -14,6 +14,12 @@ var templ = template.Must(template.New("dashboard").Parse(`
 	<html>
 		<head>
 			<title>Paperboard • Dashboard</title>
+			<style>
+				html, body {
+					margin: 0;
+					padding: 1rem;
+				}
+			</style>
 		</head>
 		<body>
 			{{ range $widget := . }}
