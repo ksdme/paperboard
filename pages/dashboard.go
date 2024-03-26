@@ -22,16 +22,24 @@ var templ = template.Must(template.New("dashboard").Parse(`
 			</style>
 		</head>
 		<body>
-			{{ range $widget := . }}
-			{{ $widget.Render }}
-			{{ end }}
+			<div
+				style="
+					display: flex;
+					flex-direction: column;
+					gap: 4rem;
+				"
+			>
+				{{ range $widget := . }}
+				{{ $widget.Render }}
+				{{ end }}
+			</div>
 		</body>
 	</html>
 `))
 
 func Dashboard(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var buffer bytes.Buffer
-	templ.Execute(&buffer, []widgets.Widget{&widgets.Clock{}})
+	templ.Execute(&buffer, []widgets.Widget{&widgets.Clock{}, &widgets.Calendar{}})
 
 	w.Header().Add("Content-Type", "text/html")
 	io.WriteString(w, buffer.String())
