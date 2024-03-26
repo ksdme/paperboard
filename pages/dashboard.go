@@ -10,6 +10,10 @@ import (
 	"github.com/ksdme/paperboard/widgets"
 )
 
+type Dashboard struct {
+	Widgets []widgets.Widget
+}
+
 var templ = template.Must(template.New("dashboard").Parse(`
 	<html>
 		<head>
@@ -35,21 +39,25 @@ var templ = template.Must(template.New("dashboard").Parse(`
 				.text-bold { font-weight: 800; }
 				.text-normal { font-weight: 400; }
 
-				.text-2xl { font-size: 4rem; }
+				.text-2xl { font-size: 4.25rem; }
 				.text-lg { font-size: 1.25rem; }
 				.text-md { font-size: 1.15rem; }
 				.text-sm { font-size: 1rem; }
 
+				.pt-half { padding-top: 0.5rem; }
+				.pb-half { padding-bottom: 0.5rem; }
+
 				.p-1 { padding: 1rem; }
 				.pt-1 { padding-top: 1rem; }
 				.pb-1 { padding-bottom: 1rem; }
+				.pl-1 { padding-top: 1rem; }
 
 				.m-1 { margin: 1rem; }
 				.mt-1 { margin-top: 1rem; }
 				.mb-1 { margin-bottom: 1rem; }
 
 				.rounded { border-radius: 6px; }
-				.left-accent { border-left: 6px solid black;  }
+				.left-accent { border-left: 4px solid black;  }
 
 				.inverted { color: white; background: black; }
 			</style>
@@ -67,9 +75,9 @@ var templ = template.Must(template.New("dashboard").Parse(`
 	</html>
 `))
 
-func Dashboard(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (dashboard *Dashboard) Handler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var buffer bytes.Buffer
-	templ.Execute(&buffer, []widgets.Widget{&widgets.Clock{}, &widgets.Calendar{}})
+	templ.Execute(&buffer, dashboard.Widgets)
 
 	w.Header().Add("Content-Type", "text/html")
 	io.WriteString(w, buffer.String())

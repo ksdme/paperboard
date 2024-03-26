@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Clock struct{}
+type ClockWidget struct{}
 
 type clockTemplateContext struct {
 	Time string
@@ -19,13 +19,13 @@ var templ = template.Must(template.New("clock").Parse(`
 			{{ .Time }}
 		</h1>
 
-		<h3 class="pt-1 text-semibold">
+		<h3 class="pt-half text-semibold">
 			{{ .Date }}
 		</h3>
 	</div>
 `))
 
-func (clock *Clock) Render() template.HTML {
+func (clock *ClockWidget) Render() template.HTML {
 	now := time.Now()
 
 	var buffer bytes.Buffer
