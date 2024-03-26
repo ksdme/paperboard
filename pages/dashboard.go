@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -76,6 +77,8 @@ var templ = template.Must(template.New("dashboard").Parse(`
 `))
 
 func (dashboard *Dashboard) Handler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	log.Println("pages.dashboard")
+
 	var buffer bytes.Buffer
 	templ.Execute(&buffer, dashboard.Widgets)
 

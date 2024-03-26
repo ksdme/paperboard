@@ -3,6 +3,7 @@ package widgets
 import (
 	"bytes"
 	"html/template"
+	"log"
 	"net/http"
 	"time"
 
@@ -49,18 +50,20 @@ var calendarTempl = template.Must(template.New("calendar").Parse(`
 
 // Fetch and load all the events into memory.
 func (widget *CalendarWidget) LoadTodayEvents() {
+	log.Println("widget.calendar", "pulling calendars")
 	entries := make([]calendarEntry, 0)
 
 	for _, calendar := range widget.Calendars {
+		log.Println("widget.calendar", "pulling calendar,", calendar.Name)
 		content, err := http.Get(calendar.ICS)
 		if err != nil {
-			// TODO: Log this.
+			log.Println("widget.calendar", "failed to load ics feed,", err)
 			continue
 		}
 
 		cal, err := ics.ParseCalendar(content.Body)
 		if err != nil {
-			// TODO: Log this.
+			log.Println("widget.calendar", "failed to parse ics feed,", err)
 			continue
 		}
 
@@ -68,13 +71,13 @@ func (widget *CalendarWidget) LoadTodayEvents() {
 		for _, event := range cal.Events() {
 			starts, err := event.GetStartAt()
 			if err != nil {
-				// TODO: Log this.
+				log.Println("widget.calendar", "ignoring event, failed to parse starts,", err)
 				continue
 			}
 
 			_, err = event.GetEndAt()
 			if err != nil {
-				// TODO: Log this.
+				log.Println("widget.calendar", "ignoring event, failed to parse ends,", err)
 				continue
 			}
 
@@ -127,8 +130,17 @@ func (widget *CalendarWidget) Render() template.HTML {
 			loc, err := time.LoadLocation(entry.calendar.Timezone)
 			if err == nil {
 				tz = loc
+			} else {
+				log.Println(
+					"widget.calendar",
+					"failed to resolve timezone,",
+					entry.calendar.Timezone,
+					"for calendar",
+					entry.calendar.Name,
+					",",
+					err,
+				)
 			}
-			// TODO: Log failure when loading the tz.
 		}
 
 		items = append(items, item{
