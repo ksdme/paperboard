@@ -10,6 +10,9 @@ import (
 )
 
 func main() {
+	clock := &widgets.ClockWidget{}
+	clock.Init()
+
 	calendar := &widgets.CalendarWidget{
 		Calendars: []widgets.Calendar{
 			{
@@ -18,11 +21,11 @@ func main() {
 			},
 		},
 	}
-	calendar.LoadTodayEvents()
+	calendar.Init()
 
 	dashboard := pages.Dashboard{
 		Widgets: []widgets.Widget{
-			&widgets.ClockWidget{},
+			clock,
 			calendar,
 		},
 	}

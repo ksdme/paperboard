@@ -25,6 +25,9 @@ var templ = template.Must(template.New("clock").Parse(`
 	</div>
 `))
 
+func (clock *ClockWidget) Init() {
+}
+
 func (clock *ClockWidget) Render() template.HTML {
 	now := time.Now()
 

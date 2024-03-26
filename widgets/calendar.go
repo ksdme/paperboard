@@ -49,7 +49,7 @@ var calendarTempl = template.Must(template.New("calendar").Parse(`
 `))
 
 // Fetch and load all the events into memory.
-func (widget *CalendarWidget) LoadTodayEvents() {
+func (widget *CalendarWidget) PullEvents() {
 	log.Println("widget.calendar", "pulling calendars")
 	entries := make([]calendarEntry, 0)
 
@@ -92,6 +92,17 @@ func (widget *CalendarWidget) LoadTodayEvents() {
 	}
 
 	widget.entries = entries
+	log.Println("widget.calendar", "pulling calendars completed")
+}
+
+func (widget *CalendarWidget) Init() {
+	sync := func() {
+		for {
+			widget.PullEvents()
+			time.Sleep(15 * time.Minute)
+		}
+	}
+	go sync()
 }
 
 type item struct {
