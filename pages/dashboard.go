@@ -53,15 +53,12 @@ var templ = template.Must(template.New("dashboard").Parse(`
 
 				.inverted { color: white; background: black; }
 			</style>
+			<script>
+				setInterval(function() {window.location.reload();}, 60 * 1000)
+			</script>
 		</head>
 		<body>
-			<div
-				style="
-					display: flex;
-					flex-direction: column;
-					gap: 4rem;
-				"
-			>
+			<div class="flex-col">
 				{{ range $widget := . }}
 				{{ $widget.Render }}
 				{{ end }}
