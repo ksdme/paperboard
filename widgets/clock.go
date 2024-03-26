@@ -14,32 +14,12 @@ type clockTemplateContext struct {
 }
 
 var templ = template.Must(template.New("clock").Parse(`
-	<div
-		style="
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			gap: 2.5rem;
-		"
-	>
-		<h1
-			style="
-				margin: 0;
-				font-size: 4rem;
-				font-weight: 800;
-			"
-		>
+	<div class="flex-col centered">
+		<h1 class="text-2xl bold">
 			{{ .Time }}
 		</h1>
 
-		<h3
-			style="
-				margin: 0;
-				font-size: 1.25rem;
-				font-weight: 600;
-			"
-		>
+		<h3 class="pt-1 text-semibold">
 			{{ .Date }}
 		</h3>
 	</div>

@@ -8,38 +8,11 @@ import (
 type Calendar struct{}
 
 var calendarTempl = template.Must(template.New("calendar").Parse(`
-	<div
-		style="
-			display: flex;
-			flex-direction: column;
-			font-size: 1.15rem;
-			margin-top: 1.25rem;
-		"
-	>
+	<div class="flex-col text-md mt-1">
 		{{ range $i := . }}
-		<div
-			style="
-				display: flex;
-				flex-direction: column;
-				border-left: 6px solid black;
-				margin-top: 1rem;
-				padding: 8px;
-				background: black;
-				color: white;
-				border-radius: 6px;
-			"
-		>
-			<div
-				style="
-					display: flex;
-				"
-			>
-				<div
-					style="
-						flex-grow: 1;
-						font-weight: 800;
-					"
-				>
+		<div class="flex-col mt-1 p-1 left-accent">
+			<div class="flex">
+				<div class="text-semibold" style="flex-grow: 1;">
 					Meeting
 				</div>
 
