@@ -1,0 +1,13 @@
+#### Paperboard
+
+Turn you Kindle into a desk dashboard.
+
+##### How does it work?
+
+Building a native applet for a Kindle is no longer officially supported. Therefore, the only way to do that is to jailbreak the device. Paperboard avoids that by leverages the web browser built into your Kindle. The server in this repository generates a simple html page for your Kindle to render. A tiny bit of JavaScript then allows us to auto refresh the page every minute.
+
+##### Todo
+
+[ ] Allow configuring the widgets without having to rebuild the server
+[ ] The actual dashboard page should be behind authentication
+[ ] Design a 3D printable dock with a charging port let through
